@@ -1,4 +1,4 @@
-# Redux Async Example
+# The Muse Coding Challenge
 
 This project template was built with [Create React App](https://github.com/facebookincubator/create-react-app).
 
