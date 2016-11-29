@@ -12,20 +12,26 @@ const selectedCategory = (state = 'Engineering', action) => {
   }
 }
 
+const isFetching = (state = false, action) => {
+  switch (action.type) {
+    case REQUEST_POSTS:
+      return true
+    case RECEIVE_POSTS:
+      return false
+    default:
+      return state
+  }
+}
+
 const posts = (state = {
-  isFetching: false,
   items: []
 }, action) => {
   switch (action.type) {
     case REQUEST_POSTS:
-      return {
-        ...state,
-        isFetching: true,
-      }
+      return state
     case RECEIVE_POSTS:
       return {
         ...state,
-        isFetching: false,
         items: action.posts,
         lastUpdated: action.receivedAt
       }
@@ -48,6 +54,7 @@ const postsByCategory = (state = { }, action) => {
 }
 
 const rootReducer = combineReducers({
+  isFetching,
   postsByCategory,
   selectedCategory
 })

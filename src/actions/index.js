@@ -28,7 +28,7 @@ const fetchPosts = category => dispatch => {
 }
 
 const shouldFetchPosts = (state, category) => {
-  const posts = state.postsByCategory['newPosts']
+  const posts = state.posts
   if (posts && posts.isFetching) {
     return false
   }

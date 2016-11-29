@@ -70,13 +70,11 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  const { selectedCategory, postsByCategory } = state
+  const { selectedCategory, postsByCategory, isFetching } = state
   const {
-    isFetching,
     lastUpdated,
     items: posts
   } = postsByCategory['newPosts'] || {
-    isFetching: true,
     items: []
   }
 
