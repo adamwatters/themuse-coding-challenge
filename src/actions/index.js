@@ -1,15 +1,9 @@
 export const REQUEST_POSTS = 'REQUEST_POSTS'
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 export const SELECT_CATEGORY = 'SELECT_CATEGORY'
-export const INVALIDATE_CATEGORY = 'INVALIDATE_CATEGORY'
 
 export const selectCategory = category => ({
   type: SELECT_CATEGORY,
-  category
-})
-
-export const invalidateCategory = category => ({
-  type: INVALIDATE_CATEGORY,
   category
 })
 
@@ -34,14 +28,11 @@ const fetchPosts = category => dispatch => {
 }
 
 const shouldFetchPosts = (state, category) => {
-  const posts = state.postsByCategory[category]
-  if (!posts) {
-    return true
-  }
-  if (posts.isFetching) {
+  const posts = state.postsByCategory['newPosts']
+  if (posts && posts.isFetching) {
     return false
   }
-  return posts.didInvalidate
+  return true
 }
 
 export const fetchPostsIfNeeded = category => (dispatch, getState) => {

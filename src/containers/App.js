@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { selectCategory, fetchPostsIfNeeded, invalidateCategory } from '../actions'
+import { selectCategory, fetchPostsIfNeeded } from '../actions'
 import Picker from '../components/Picker'
 import Posts from '../components/Posts'
 
@@ -33,7 +33,6 @@ class App extends Component {
     e.preventDefault()
 
     const { dispatch, selectedCategory } = this.props
-    dispatch(invalidateCategory(selectedCategory))
     dispatch(fetchPostsIfNeeded(selectedCategory))
   }
 
@@ -76,7 +75,7 @@ const mapStateToProps = state => {
     isFetching,
     lastUpdated,
     items: posts
-  } = postsByCategory[selectedCategory] || {
+  } = postsByCategory['newPosts'] || {
     isFetching: true,
     items: []
   }
