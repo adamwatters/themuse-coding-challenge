@@ -9,7 +9,6 @@ class App extends Component {
     selectedCategory: PropTypes.string.isRequired,
     posts: PropTypes.array.isRequired,
     isFetching: PropTypes.bool.isRequired,
-    lastUpdated: PropTypes.number,
     dispatch: PropTypes.func.isRequired
   }
 
@@ -37,27 +36,13 @@ class App extends Component {
   }
 
   render() {
-    const { selectedCategory, posts, isFetching, lastUpdated } = this.props
+    const { selectedCategory, posts, isFetching } = this.props
     const isEmpty = posts.length === 0
     return (
       <div>
         <Picker value={selectedCategory}
                 onChange={this.handleChange}
                 options={[ 'Engineering', 'Education' ]} />
-        <p>
-          {lastUpdated &&
-            <span>
-              Last updated at {new Date(lastUpdated).toLocaleTimeString()}.
-              {' '}
-            </span>
-          }
-          {!isFetching &&
-            <a href="#"
-               onClick={this.handleRefreshClick}>
-              Refresh
-            </a>
-          }
-        </p>
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
@@ -72,7 +57,6 @@ class App extends Component {
 const mapStateToProps = state => {
   const { selectedCategory, postsByCategory, isFetching } = state
   const {
-    lastUpdated,
     items: posts
   } = postsByCategory['newPosts'] || {
     items: []
@@ -82,7 +66,6 @@ const mapStateToProps = state => {
     selectedCategory,
     posts,
     isFetching,
-    lastUpdated
   }
 }
 

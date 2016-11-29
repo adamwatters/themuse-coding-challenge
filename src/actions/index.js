@@ -15,8 +15,7 @@ export const requestPosts = category => ({
 export const receivePosts = (category, json) => ({
   type: RECEIVE_POSTS,
   category,
-  posts: json.results.map(child => child),
-  receivedAt: Date.now()
+  posts: json.results.map(child => child)
 })
 
 const fetchPosts = category => dispatch => {

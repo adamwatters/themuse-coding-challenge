@@ -32,8 +32,7 @@ const posts = (state = {
     case RECEIVE_POSTS:
       return {
         ...state,
-        items: action.posts,
-        lastUpdated: action.receivedAt
+        items: action.posts
       }
     default:
       return state
