@@ -55,18 +55,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  const { selectedCategory, postsByCategory, isFetching } = state
-  const {
-    items: posts
-  } = postsByCategory['newPosts'] || {
-    items: []
-  }
-
-  return {
-    selectedCategory,
-    posts,
-    isFetching,
-  }
+  return state
 }
 
 export default connect(mapStateToProps)(App)

@@ -22,13 +22,11 @@ const fetchPosts = category => dispatch => {
   dispatch(requestPosts(category))
   return fetch(`https://api-v2.themuse.com/jobs?category=${category}&page=1&api_key=640886a603fbf32faffa23a91e7d263ce9d47630d4d3d0b2434adce800ef01a1`)
     .then(response => response.json())
-    // .then(response => console.log(response))
     .then(json => dispatch(receivePosts(category, json)))
 }
 
 const shouldFetchPosts = (state, category) => {
-  const posts = state.posts
-  if (posts && posts.isFetching) {
+  if (state.posts && state.posts.isFetching) {
     return false
   }
   return true

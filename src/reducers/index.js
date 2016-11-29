@@ -23,30 +23,12 @@ const isFetching = (state = false, action) => {
   }
 }
 
-const posts = (state = {
-  items: []
-}, action) => {
+const posts = (state = [], action) => {
   switch (action.type) {
     case REQUEST_POSTS:
       return state
     case RECEIVE_POSTS:
-      return {
-        ...state,
-        items: action.posts
-      }
-    default:
-      return state
-  }
-}
-
-const postsByCategory = (state = { }, action) => {
-  switch (action.type) {
-    case RECEIVE_POSTS:
-    case REQUEST_POSTS:
-      return {
-        ...state,
-        newPosts: posts(state[action.category], action)
-      }
+      return action.posts
     default:
       return state
   }
@@ -54,7 +36,7 @@ const postsByCategory = (state = { }, action) => {
 
 const rootReducer = combineReducers({
   isFetching,
-  postsByCategory,
+  posts,
   selectedCategory
 })
 
