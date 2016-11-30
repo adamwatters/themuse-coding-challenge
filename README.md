@@ -1,5 +1,9 @@
 # The Muse Coding Challenge
 
+## Notes
+- page results are indexed starting from zero
+
+
 This project template was built with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 ## Available Scripts

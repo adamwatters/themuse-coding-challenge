@@ -7,21 +7,20 @@ import Posts from '../components/Posts'
 class App extends Component {
   static propTypes = {
     appliedFilters: PropTypes.objectOf(PropTypes.array).isRequired,
-    selectedCategories: PropTypes.array.isRequired,
     posts: PropTypes.array.isRequired,
     isFetching: PropTypes.bool.isRequired,
     dispatch: PropTypes.func.isRequired
   }
 
   componentDidMount() {
-    const { dispatch, selectedCategories } = this.props
-    dispatch(fetchPostsIfNeeded(selectedCategories))
+    const { dispatch, appliedFilters } = this.props
+    dispatch(fetchPostsIfNeeded(appliedFilters))
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.selectedCategories !== this.props.selectedCategories) {
-      const { dispatch, selectedCategories } = nextProps
-      dispatch(fetchPostsIfNeeded(selectedCategories))
+    if (nextProps.appliedFilters !== this.props.appliedFilters) {
+      const { dispatch, appliedFilters } = nextProps
+      dispatch(fetchPostsIfNeeded(appliedFilters))
     }
   }
 
