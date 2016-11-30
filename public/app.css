@@ -1,0 +1,12 @@
+.paginator {
+  text-align: center;
+}
+
+.paginator_page-number {
+  font-weight: bold;
+  padding: 0px 10px;
+}
+
+.paginator_button {
+  padding: 0px 15px;
+}
