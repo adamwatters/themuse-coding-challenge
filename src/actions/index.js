@@ -1,6 +1,13 @@
 export const REQUEST_POSTS = 'REQUEST_POSTS'
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 export const CHANGE_CATEGORY_SELECTION = 'CHANGE_CATEGORY_SELECTION'
+export const UPDATE_APPLIED_FILTERS = 'UPDATE_APPLIED_FILTERS'
+
+export const updateAppliedFilters = (filterName, filtersApplied) => ({
+  type: UPDATE_APPLIED_FILTERS,
+  filterName,
+  filtersApplied
+})
 
 export const changeCategorySelection = categories => ({
   type: CHANGE_CATEGORY_SELECTION,

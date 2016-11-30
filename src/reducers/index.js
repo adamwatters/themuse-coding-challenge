@@ -1,7 +1,18 @@
 import { combineReducers } from 'redux'
 import {
-  CHANGE_CATEGORY_SELECTION, REQUEST_POSTS, RECEIVE_POSTS
+  UPDATE_APPLIED_FILTERS, CHANGE_CATEGORY_SELECTION, REQUEST_POSTS, RECEIVE_POSTS
 } from '../actions'
+
+const appliedFilters = (state = {}, action) => {
+  switch (action.type) {
+    case UPDATE_APPLIED_FILTERS:
+      const updaterObject = {}
+      updaterObject[action.filterName] = action.filtersApplied
+      return Object.assign({}, state, updaterObject)
+    default:
+      return state
+  }
+}
 
 const selectedCategories = (state = [], action) => {
   switch (action.type) {
@@ -37,7 +48,8 @@ const posts = (state = [], action) => {
 const rootReducer = combineReducers({
   isFetching,
   posts,
-  selectedCategories
+  selectedCategories,
+  appliedFilters
 })
 
 export default rootReducer

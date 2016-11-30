@@ -1,15 +1,12 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { changeCategorySelection, fetchPostsIfNeeded } from '../actions'
-import Picker from '../components/Picker'
+import { updateAppliedFilters, fetchPostsIfNeeded } from '../actions'
+import Filters from '../components/Filters'
 import Posts from '../components/Posts'
-import CATEGORY_NAMES from '../data/categoryNames'
-import COMPANY_NAMES from '../data/companyNames'
-
-const categoryOptions = CATEGORY_NAMES.map(name => { return {value: name, label: name}})
 
 class App extends Component {
   static propTypes = {
+    appliedFilters: PropTypes.objectOf(PropTypes.array).isRequired,
     selectedCategories: PropTypes.array.isRequired,
     posts: PropTypes.array.isRequired,
     isFetching: PropTypes.bool.isRequired,
@@ -28,19 +25,21 @@ class App extends Component {
     }
   }
 
-  handleChange = categories => {
-    this.props.dispatch(changeCategorySelection(categories.map(category => category.value)))
+  makeFilterChangeHandler = (filterName) => {
+    const dispatch = this.props.dispatch
+    return (filtersApplied) => {
+      dispatch(updateAppliedFilters(filterName, filtersApplied.map(filter => filter.value)))
+    }
   }
 
   render() {
-    const { posts, isFetching, selectedCategories } = this.props
+    const { posts, isFetching, appliedFilters } = this.props
     const isEmpty = posts.length === 0
     return (
       <div className="row">
         <div className="four columns">
-          <Picker onChange={this.handleChange}
-                  options={categoryOptions}
-                  values={selectedCategories} />
+          <Filters changeHandlerMaker={this.makeFilterChangeHandler}
+                   appliedFilters={appliedFilters} />
         </div>
         <div className="eight columns">
           {isEmpty
