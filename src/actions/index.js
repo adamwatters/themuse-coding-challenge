@@ -1,39 +1,48 @@
 export const REQUEST_POSTS = 'REQUEST_POSTS'
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
-export const SELECT_CATEGORY = 'SELECT_CATEGORY'
+export const CHANGE_CATEGORY_SELECTION = 'CHANGE_CATEGORY_SELECTION'
 
-export const selectCategory = category => ({
-  type: SELECT_CATEGORY,
-  category
+export const changeCategorySelection = categories => ({
+  type: CHANGE_CATEGORY_SELECTION,
+  categories
 })
 
-export const requestPosts = category => ({
+export const requestPosts = categories => ({
   type: REQUEST_POSTS,
-  category
+  categories
 })
 
-export const receivePosts = (category, json) => ({
+export const receivePosts = (categories, json) => ({
   type: RECEIVE_POSTS,
-  category,
+  categories,
   posts: json.results.map(child => child)
 })
 
-const fetchPosts = category => dispatch => {
-  dispatch(requestPosts(category))
-  return fetch(`https://api-v2.themuse.com/jobs?category=${category}&page=1&api_key=640886a603fbf32faffa23a91e7d263ce9d47630d4d3d0b2434adce800ef01a1`)
-    .then(response => response.json())
-    .then(json => dispatch(receivePosts(category, json)))
+const buildUrlString = categories => {
+  const categoryParameterStrings = categories.reduce((parameterString, category) => {
+    return parameterString.concat(`category=${encodeURIComponent(category)}&`);
+  }, "")
+  return `https://api-v2.themuse.com/jobs?${categoryParameterStrings}page=1&api_key=640886a603fbf32faffa23a91e7d263ce9d47630d4d3d0b2434adce800ef01a1`
 }
 
-const shouldFetchPosts = (state, category) => {
+const fetchPosts = categories => dispatch => {
+  dispatch(requestPosts(categories))
+  console.log(categories)
+  console.log(buildUrlString(categories))
+  return fetch(buildUrlString(categories))
+    .then(response => response.json())
+    .then(json => dispatch(receivePosts(categories, json)))
+}
+
+const shouldFetchPosts = (state, categories) => {
   if (state.posts && state.posts.isFetching) {
     return false
   }
   return true
 }
 
-export const fetchPostsIfNeeded = category => (dispatch, getState) => {
-  if (shouldFetchPosts(getState(), category)) {
-    return dispatch(fetchPosts(category))
+export const fetchPostsIfNeeded = categories => (dispatch, getState) => {
+  if (shouldFetchPosts(getState(), categories)) {
+    return dispatch(fetchPosts(categories))
   }
 }

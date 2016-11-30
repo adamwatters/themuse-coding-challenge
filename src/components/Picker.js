@@ -1,24 +1,25 @@
 import React, { PropTypes } from 'react'
+import Select from 'react-select';
 
-const Picker = ({ value, onChange, options }) => (
+const Picker = ({ values, onChange, options }) => (
   <span>
-    <h1>{value}</h1>
-    <select onChange={e => onChange(e.target.value)}
-            value={value}>
-      {options.map(option =>
-        <option value={option} key={option}>
-          {option}
-        </option>)
-      }
-    </select>
+    <Select
+      name="category-select"
+      value={values}
+      options={options}
+      onChange={onChange}
+      multi={true}
+    />
   </span>
 )
 
 Picker.propTypes = {
-  options: PropTypes.arrayOf(
+  values: PropTypes.arrayOf(
     PropTypes.string.isRequired
   ).isRequired,
-  value: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.object.isRequired
+  ).isRequired,
   onChange: PropTypes.func.isRequired
 }
 
