@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react'
 import Select from 'react-select';
 import CATEGORY_NAMES from '../data/categoryNames'
 import COMPANY_NAMES from '../data/companyNames'
+import LOCATION_NAMES from '../data/locationNames'
+import LEVEL_NAMES from '../data/levelNames'
 
 const filtersOptions = [
   {
@@ -11,20 +13,30 @@ const filtersOptions = [
   {
     name: 'category',
     options: CATEGORY_NAMES.map(name => { return {value: name, label: name}})
+  },
+  {
+    name: 'location',
+    options: LOCATION_NAMES.map(name => { return {value: name, label: name}})
+  },
+  {
+    name: 'level',
+    options: LEVEL_NAMES.map(name => { return {value: name, label: name}})
   }
 ]
 
 const Filters = ({ appliedFilters, changeHandlerMaker }) => {
   const filters = filtersOptions.map(filter => {
     return (
-      <Select
-      key={filter.name}
-      name={filter.name}
-      value={appliedFilters[filter.name]}
-      options={filter.options}
-      onChange={changeHandlerMaker(filter.name)}
-      multi={true}
-      />
+      <span key={filter.name}>
+        <span>{filter.name}</span>
+        <Select
+        name={filter.name}
+        value={appliedFilters[filter.name]}
+        options={filter.options}
+        onChange={changeHandlerMaker(filter.name)}
+        multi={true}
+        />
+      </span>
     )
   })
   return (
