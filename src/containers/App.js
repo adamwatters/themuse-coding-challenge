@@ -36,16 +36,20 @@ class App extends Component {
     const { posts, isFetching, selectedCategories } = this.props
     const isEmpty = posts.length === 0
     return (
-      <div>
-        <Picker onChange={this.handleChange}
-                options={categoryOptions}
-                values={selectedCategories} />
-        {isEmpty
-          ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
-          : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
-              <Posts posts={posts} />
-            </div>
-        }
+      <div className="row">
+        <div className="four columns">
+          <Picker onChange={this.handleChange}
+                  options={categoryOptions}
+                  values={selectedCategories} />
+        </div>
+        <div className="eight columns">
+          {isEmpty
+            ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
+            : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
+                <Posts posts={posts} />
+              </div>
+          }
+        </div>
       </div>
     )
   }
