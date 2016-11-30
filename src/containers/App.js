@@ -1,26 +1,29 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { updateAppliedFilters, fetchPostsIfNeeded } from '../actions'
+import { updateAppliedFilters, fetchPostsIfNeeded, changePage } from '../actions'
 import Filters from '../components/Filters'
 import Posts from '../components/Posts'
+import Paginator from '../components/Paginator'
 
 class App extends Component {
   static propTypes = {
     appliedFilters: PropTypes.objectOf(PropTypes.array).isRequired,
     posts: PropTypes.array.isRequired,
+    currentPage: PropTypes.number.isRequired,
     isFetching: PropTypes.bool.isRequired,
     dispatch: PropTypes.func.isRequired
   }
 
   componentDidMount() {
-    const { dispatch, appliedFilters } = this.props
-    dispatch(fetchPostsIfNeeded(appliedFilters))
+    const { dispatch, appliedFilters, currentPage } = this.props
+    dispatch(fetchPostsIfNeeded(appliedFilters, currentPage))
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.appliedFilters !== this.props.appliedFilters) {
-      const { dispatch, appliedFilters } = nextProps
-      dispatch(fetchPostsIfNeeded(appliedFilters))
+    if (nextProps.appliedFilters !== this.props.appliedFilters || 
+        nextProps.currentPage !== this.props.currentPage) {
+      const { dispatch, appliedFilters, currentPage } = nextProps
+      dispatch(fetchPostsIfNeeded(appliedFilters, currentPage))
     }
   }
 
@@ -31,8 +34,18 @@ class App extends Component {
     }
   }
 
+  nextPageHandler = currentPage => {
+    const dispatch = this.props.dispatch
+    dispatch(changePage(currentPage + 1))
+  }
+
+  previousPageHandler = currentPage => {
+    const dispatch = this.props.dispatch
+    dispatch(changePage(currentPage - 1))
+  }
+
   render() {
-    const { posts, isFetching, appliedFilters } = this.props
+    const { posts, isFetching, appliedFilters, currentPage } = this.props
     const isEmpty = posts.length === 0
     return (
       <div className="row">
@@ -44,6 +57,9 @@ class App extends Component {
           {isEmpty
             ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
             : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
+                <Paginator currentPage={currentPage}
+                           handleIncrement={this.nextPageHandler}
+                           handleDecrement={this.previousPageHandler} />
                 <Posts posts={posts} />
               </div>
           }

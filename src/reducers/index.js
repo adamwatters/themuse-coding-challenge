@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import {
-  UPDATE_APPLIED_FILTERS, REQUEST_POSTS, RECEIVE_POSTS
+  UPDATE_APPLIED_FILTERS, REQUEST_POSTS, RECEIVE_POSTS, CHANGE_PAGE
 } from '../actions'
 
 const appliedFilters = (state = {}, action) => {
@@ -25,12 +25,25 @@ const isFetching = (state = false, action) => {
   }
 }
 
+const currentPage = (state = 0, action) => {
+  switch (action.type) {
+    case CHANGE_PAGE:
+      return action.pageNumber
+    case UPDATE_APPLIED_FILTERS:
+      return 0
+    default:
+      return state
+  }
+}
+
 const posts = (state = [], action) => {
   switch (action.type) {
     case REQUEST_POSTS:
       return state
     case RECEIVE_POSTS:
       return action.posts
+    case CHANGE_PAGE:
+      return []
     default:
       return state
   }
@@ -39,6 +52,7 @@ const posts = (state = [], action) => {
 const rootReducer = combineReducers({
   isFetching,
   posts,
+  currentPage,
   appliedFilters
 })
 
