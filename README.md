@@ -1,8 +1,9 @@
 # The Muse Coding Challenge
 
+## [Demo](https://adamwatters.github.io/themuse-coding-challenge/)
+
 ## Notes
 - page results are indexed starting from zero
-
 
 ## Create React App
 
