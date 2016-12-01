@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react'
 const Posts = ({posts}) => (
   <ul className='posts'>
     {posts.map((post, i) =>
-      <li key={i}><a href={post.refs.landing_page}>{post.name}</a> @ {post.company.name}</li>
+      <li key={i}><a target='_blank' href={post.refs.landing_page}>{post.name}</a> @ {post.company.name}</li>
     )}
   </ul>
 )

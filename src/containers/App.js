@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { updateAppliedFilters, fetchPostsIfNeeded, changePage } from '../actions'
 import Filters from '../components/Filters'
 import Posts from '../components/Posts'
-import Paginator from '../components/Paginator'
+import Paginator from '../components/paginator/Paginator'
 
 class App extends Component {
   static propTypes = {
