@@ -1,10 +1,9 @@
 # The Muse Coding Challenge
 
-## [Demo](https://adamwatters.github.io/themuse-coding-challenge/)
+`npm install`
+`npm start`
 
-## Notes
-- page results are indexed starting from zero
-- test runner 
+## [Demo](https://adamwatters.github.io/themuse-coding-challenge/)
 
 ## Create React App
 
