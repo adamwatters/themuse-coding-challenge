@@ -1,4 +1,5 @@
 import * as types from '../constants/ActionTypes'
+import buildSearchUrl from '../helpers/buildSearchUrl'
 
 export const updateAppliedFilters = (filterName, filtersApplied) => ({
   type: types.UPDATE_APPLIED_FILTERS,
@@ -21,20 +22,9 @@ export const changePage = pageNumber => ({
   pageNumber
 })
 
-const buildUrlString = (filtersApplied, currentPage) => {
-
-  const filterParamString = Object.keys(filtersApplied).reduce((acc, filterName) => {
-    return acc.concat(filtersApplied[filterName].reduce((acc, filter) => {
-      return acc.concat(`${filterName}=${encodeURIComponent(filter)}&`)
-    },''))
-  },'')
-
-  return `https://api-v2.themuse.com/jobs?${filterParamString}page=${currentPage}&api_key=640886a603fbf32faffa23a91e7d263ce9d47630d4d3d0b2434adce800ef01a1`
-}
-
 const fetchPosts = (filtersApplied, currentPage) => dispatch => {
   dispatch(requestPosts())
-  return fetch(buildUrlString(filtersApplied, currentPage))
+  return fetch(buildSearchUrl(filtersApplied, currentPage))
     .then(response => response.json())
     .then(json => dispatch(receivePosts(json)))
 }
