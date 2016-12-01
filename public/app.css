@@ -1,5 +1,12 @@
 .filters {
   padding: 16px;
+  background-color: lightgrey;
+}
+
+.posts {
+  list-style-type: none;
+  margin-bottom: 0px;
+  padding: 16px;
 }
 
 .paginator {

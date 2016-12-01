@@ -49,28 +49,27 @@ class App extends Component {
     const { posts, isFetching, appliedFilters, currentPage, pagesAvailable } = this.props
     const isEmpty = posts.length === 0
     return (
-      <div className="row">
-        <div className="four columns">
-          <Filters changeHandlerMaker={this.makeFilterChangeHandler}
-                   appliedFilters={appliedFilters} />
+      <span>
+        <h3>Jobs from TheMuse</h3>
+        <div className="row">
+          <div className="five columns">
+            <Filters changeHandlerMaker={this.makeFilterChangeHandler}
+                     appliedFilters={appliedFilters} />
+          </div>
+          <div className="seven columns">
+            {isEmpty
+              ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
+              : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
+                  <Posts posts={posts} />
+                  <Paginator currentPage={currentPage}
+                             pagesAvailable={pagesAvailable}
+                             handleIncrement={this.nextPageHandler}
+                             handleDecrement={this.previousPageHandler} />
+                </div>
+            }
+          </div>
         </div>
-        <div className="eight columns">
-          {isEmpty
-            ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
-            : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
-                <Paginator currentPage={currentPage}
-                           pagesAvailable={pagesAvailable}
-                           handleIncrement={this.nextPageHandler}
-                           handleDecrement={this.previousPageHandler} />
-                <Posts posts={posts} />
-                <Paginator currentPage={currentPage}
-                           pagesAvailable={pagesAvailable}
-                           handleIncrement={this.nextPageHandler}
-                           handleDecrement={this.previousPageHandler} />
-              </div>
-          }
-        </div>
-      </div>
+      </span>
     )
   }
 }

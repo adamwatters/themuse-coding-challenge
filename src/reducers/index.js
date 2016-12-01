@@ -51,8 +51,6 @@ const posts = (state = [], action) => {
       return state
     case RECEIVE_POSTS:
       return action.posts
-    // case CHANGE_PAGE:
-    //   return []
     default:
       return state
   }
