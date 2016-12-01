@@ -40,9 +40,9 @@ const Filters = ({ appliedFilters, changeHandlerMaker }) => {
     )
   })
   return (
-  <span>
+  <div className='filters'>
     {filters}
-  </span>
+  </div>
   )
 }
 
