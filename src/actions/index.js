@@ -1,26 +1,23 @@
-export const REQUEST_POSTS = 'REQUEST_POSTS'
-export const RECEIVE_POSTS = 'RECEIVE_POSTS'
-export const UPDATE_APPLIED_FILTERS = 'UPDATE_APPLIED_FILTERS'
-export const CHANGE_PAGE = 'CHANGE_PAGE'
+import * as types from '../constants/ActionTypes'
 
 export const updateAppliedFilters = (filterName, filtersApplied) => ({
-  type: UPDATE_APPLIED_FILTERS,
+  type: types.UPDATE_APPLIED_FILTERS,
   filterName,
   filtersApplied
 })
 
 export const requestPosts = filtersApplied => ({
-  type: REQUEST_POSTS
+  type: types.REQUEST_POSTS
 })
 
 export const receivePosts = json => ({
-  type: RECEIVE_POSTS,
+  type: types.RECEIVE_POSTS,
   posts: json.results,
   pagesAvailable: json.page_count
 })
 
 export const changePage = pageNumber => ({
-  type: CHANGE_PAGE,
+  type: types.CHANGE_PAGE,
   pageNumber
 })
 
