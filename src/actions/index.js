@@ -23,14 +23,13 @@ export const changePage = pageNumber => ({
 })
 
 const fetchPosts = (filtersApplied, currentPage) => dispatch => {
-  dispatch(requestPosts())
   return fetch(buildSearchUrl(filtersApplied, currentPage))
     .then(response => response.json())
     .then(json => dispatch(receivePosts(json)))
 }
 
 const shouldFetchPosts = (state) => {
-  if (state.posts && state.posts.isFetching) {
+  if (state.isFetching) {
     return false
   }
   return true

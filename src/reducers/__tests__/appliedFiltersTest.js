@@ -1,5 +1,5 @@
 import reducer from '../appliedFilters'
-import * as types from '../../constants/ActionTypes'
+import * as actions from '../../actions/index'
 
 describe('appliedFilters reducer', () => {
   it('should return an empty object for initial state', () => {
@@ -13,30 +13,18 @@ describe('appliedFilters reducer', () => {
   it('should handle filter updates', () => {
 
     expect(
-      reducer({}, {
-        type: types.UPDATE_APPLIED_FILTERS,
-        filterName: "companies",
-        filtersApplied: ["apple","microsoft"]
-      })
-    ).toEqual({companies:["apple", "microsoft"]})
+      reducer({}, actions.updateAppliedFilters('company', ["apple","microsoft"]))
+    ).toEqual({company:["apple", "microsoft"]})
 
     expect(
-      reducer({companies:["apple", "microsoft"]}, {
-        type: types.UPDATE_APPLIED_FILTERS,
-        filterName: "companies",
-        filtersApplied: ["apple"]
-      })
-    ).toEqual({companies:["apple"]})
+      reducer({company:["apple", "microsoft"]}, actions.updateAppliedFilters('company', ["apple"]))
+    ).toEqual({company:["apple"]})
 
     expect(
-      reducer({companies:["apple"]}, {
-        type: types.UPDATE_APPLIED_FILTERS,
-        filterName: "categories",
-        filtersApplied: ["sales"]
-      })
+      reducer({company:["apple"]}, actions.updateAppliedFilters('category', ["sales"]))
     ).toEqual({
-      companies:["apple"],
-      categories:["sales"]
+      company:["apple"],
+      category:["sales"]
     })
 
   })

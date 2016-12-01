@@ -1,7 +1,7 @@
 import reducer from '../posts'
-import * as types from '../../constants/ActionTypes'
+import * as actions from '../../actions/index'
 
-describe('todos reducer', () => {
+describe('posts reducer', () => {
   it('should return an empty array for the initial state', () => {
     expect(
       reducer(undefined, {})
@@ -10,10 +10,7 @@ describe('todos reducer', () => {
 
   it('should handle recieve post action', () => {
     expect(
-      reducer([], {
-        type: types.RECEIVE_POSTS,
-        posts: [1,2,3]
-      })
+      reducer([], actions.receivePosts({results: [1,2,3]}))
     ).toEqual([1,2,3])
   })
 })
