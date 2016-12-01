@@ -1,5 +1,6 @@
 {
-  "name": "themuse",
+  "name": "themuse-coding-challenge",
+  "homepage": "http://adamwatters.github.io/themuse-coding-challenge",
   "version": "0.0.1",
   "private": true,
   "devDependencies": {
