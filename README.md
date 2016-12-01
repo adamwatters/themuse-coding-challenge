@@ -4,6 +4,7 @@
 
 ## Notes
 - page results are indexed starting from zero
+- test runner 
 
 ## Create React App
 
@@ -20,6 +21,10 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
+
+### `npm test`
+Runs the test suite in watch mode. <br>
+There's a bug on MacSierra that may cause this to fail. If so [brew install watchman](https://github.com/facebookincubator/create-react-app/issues/871)
 
 ### `npm run build`
 

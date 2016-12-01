@@ -5,8 +5,7 @@ const atUpperPageLimit = (currentPage, pagesAvailable) => { return currentPage =
 const NextPageButton = ({currentPage, pagesAvailable, handleIncrement}) => {
   return atUpperPageLimit(currentPage, pagesAvailable) ? 
     (<button className='paginator_button paginator_button__inactive' 
-             onClick={() => {}}>X</button>)
-                          : 
+             onClick={() => {}}>X</button>) : 
     (<button className='paginator_button'
              onClick={() => {handleIncrement(currentPage, pagesAvailable)}}>&gt;</button>)
 }
