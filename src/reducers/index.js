@@ -36,14 +36,23 @@ const currentPage = (state = 0, action) => {
   }
 }
 
+const pagesAvailable = (state = 0, action) => {
+  switch (action.type) {
+    case RECEIVE_POSTS:
+      return action.pagesAvailable
+    default:
+      return state
+  }
+}
+
 const posts = (state = [], action) => {
   switch (action.type) {
     case REQUEST_POSTS:
       return state
     case RECEIVE_POSTS:
       return action.posts
-    case CHANGE_PAGE:
-      return []
+    // case CHANGE_PAGE:
+    //   return []
     default:
       return state
   }
@@ -53,6 +62,7 @@ const rootReducer = combineReducers({
   isFetching,
   posts,
   currentPage,
+  pagesAvailable,
   appliedFilters
 })
 

@@ -15,7 +15,8 @@ export const requestPosts = filtersApplied => ({
 
 export const receivePosts = json => ({
   type: RECEIVE_POSTS,
-  posts: json.results
+  posts: json.results,
+  pagesAvailable: json.page_count
 })
 
 export const changePage = pageNumber => ({

@@ -10,6 +10,7 @@ class App extends Component {
     appliedFilters: PropTypes.objectOf(PropTypes.array).isRequired,
     posts: PropTypes.array.isRequired,
     currentPage: PropTypes.number.isRequired,
+    pagesAvailable: PropTypes.number.isRequired,
     isFetching: PropTypes.bool.isRequired,
     dispatch: PropTypes.func.isRequired
   }
@@ -45,7 +46,7 @@ class App extends Component {
   }
 
   render() {
-    const { posts, isFetching, appliedFilters, currentPage } = this.props
+    const { posts, isFetching, appliedFilters, currentPage, pagesAvailable } = this.props
     const isEmpty = posts.length === 0
     return (
       <div className="row">
@@ -58,9 +59,14 @@ class App extends Component {
             ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
             : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
                 <Paginator currentPage={currentPage}
+                           pagesAvailable={pagesAvailable}
                            handleIncrement={this.nextPageHandler}
                            handleDecrement={this.previousPageHandler} />
                 <Posts posts={posts} />
+                <Paginator currentPage={currentPage}
+                           pagesAvailable={pagesAvailable}
+                           handleIncrement={this.nextPageHandler}
+                           handleDecrement={this.previousPageHandler} />
               </div>
           }
         </div>
