@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { updateAppliedFilters, fetchPostsIfNeeded, changePage } from '../actions'
+import { updateAppliedFilters, fetchPosts, changePage } from '../actions'
 import Filters from '../components/Filters'
 import Posts from '../components/Posts'
 import Paginator from '../components/paginator/Paginator'
@@ -8,23 +8,26 @@ import Paginator from '../components/paginator/Paginator'
 class App extends Component {
   static propTypes = {
     appliedFilters: PropTypes.objectOf(PropTypes.array).isRequired,
-    posts: PropTypes.array.isRequired,
+    mostRecentRequest: PropTypes.number.isRequired,
+    posts: React.PropTypes.shape({
+      items: React.PropTypes.array.isRequired,
+      requestedAt: React.PropTypes.number.isRequired
+    }).isRequired,
     currentPage: PropTypes.number.isRequired,
     pagesAvailable: PropTypes.number.isRequired,
-    isFetching: PropTypes.bool.isRequired,
     dispatch: PropTypes.func.isRequired
   }
 
   componentDidMount() {
     const { dispatch, appliedFilters, currentPage } = this.props
-    dispatch(fetchPostsIfNeeded(appliedFilters, currentPage))
+    dispatch(fetchPosts(appliedFilters, currentPage))
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.appliedFilters !== this.props.appliedFilters || 
         nextProps.currentPage !== this.props.currentPage) {
       const { dispatch, appliedFilters, currentPage } = nextProps
-      dispatch(fetchPostsIfNeeded(appliedFilters, currentPage))
+      dispatch(fetchPosts(appliedFilters, currentPage))
     }
   }
 
@@ -46,8 +49,9 @@ class App extends Component {
   }
 
   render() {
-    const { posts, isFetching, appliedFilters, currentPage, pagesAvailable } = this.props
-    const isEmpty = posts.length === 0
+    const { posts, mostRecentRequest, appliedFilters, currentPage, pagesAvailable } = this.props
+    const isEmpty = posts.items.length === 0
+    const postsAreCurrent = mostRecentRequest === posts.requestedAt
     return (
       <span>
         <h3>Jobs from TheMuse</h3>
@@ -58,9 +62,9 @@ class App extends Component {
           </div>
           <div className="seven columns">
             {isEmpty
-              ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
-              : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
-                  <Posts posts={posts} />
+              ? (postsAreCurrent ? <h2>Empty.</h2> : <h2>Loading...</h2>)
+              : <div style={postsAreCurrent ? {opacity: 1} : {pointerEvents: 'none', opacity:0.2}}>
+                  <Posts posts={posts.items} />
                   <Paginator currentPage={currentPage}
                              pagesAvailable={pagesAvailable}
                              handleIncrement={this.nextPageHandler}

@@ -7,14 +7,16 @@ export const updateAppliedFilters = (filterName, filtersApplied) => ({
   filtersApplied
 })
 
-export const requestPosts = filtersApplied => ({
-  type: types.REQUEST_POSTS
+export const requestPosts = requestedAt => ({
+  type: types.REQUEST_POSTS,
+  requestedAt
 })
 
-export const receivePosts = json => ({
+export const receivePosts = (json, requestedAt) => ({
   type: types.RECEIVE_POSTS,
   posts: json.results,
-  pagesAvailable: json.page_count
+  pagesAvailable: json.page_count,
+  requestedAt
 })
 
 export const changePage = pageNumber => ({
@@ -22,21 +24,12 @@ export const changePage = pageNumber => ({
   pageNumber
 })
 
-const fetchPosts = (filtersApplied, currentPage) => dispatch => {
+export const fetchPosts = (filtersApplied, currentPage) => dispatch => {
+  const requestedAt = Date.now()
+  dispatch(requestPosts(requestedAt))
   return fetch(buildSearchUrl(filtersApplied, currentPage))
     .then(response => response.json())
-    .then(json => dispatch(receivePosts(json)))
-}
-
-const shouldFetchPosts = (state) => {
-  if (state.isFetching) {
-    return false
-  }
-  return true
-}
-
-export const fetchPostsIfNeeded = (filtersApplied, currentPage) => (dispatch, getState) => {
-  if (shouldFetchPosts(getState())) {
-    return dispatch(fetchPosts(filtersApplied, currentPage))
-  }
+    // temporarily simulating a slow response over the network
+    .then(json => new Promise(resolve => setTimeout(() => resolve(json), 1000)))
+    .then(json => dispatch(receivePosts(json, requestedAt)))
 }
